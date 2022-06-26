@@ -1,8 +1,8 @@
 module.exports = {
 
-        getCompliment: (req, res) => {
+    getCompliment: (req, res) => {
         const compliments = ["Gee, you're a smart cookie!", "Cool shirt!", "Your Javascript skills are stellar."];
-    
+      
         // choose random compliment
         let randomIndex = Math.floor(Math.random() * compliments.length);
         let randomCompliment = compliments[randomIndex];
@@ -10,18 +10,43 @@ module.exports = {
         res.status(200).send(randomCompliment);
     },
     getFortune: (req, res) => {
-        const fortune = ["A small donation is call for. Its the right thing to do.",
-                         "A smile is your personal welcome mat.",
-                         "A smooth long journey! Great expectations.",
-                         "Accept something that you cannot change, and you will feel better.",
-                         "Allow compassion to guide your decisions.",
-                         "Do not be intimidated by the eloquence of others.",]
-                         
-        let randomIndex = Math.floor(Math.random() * fortune.length);
-        let randomFortune = fortune[randomIndex];
+        const fortunes = [
+            "A beautiful smart and loving person will be coming into your life.",
+            "A dubious friend may be an enemy in camouflage.",
+            "A faithful friend is a strong defense.",
+            "A feather in the hand is better than a bird in the air.",
+            "A fresh start will put you on your way.",
+            "A friend asks only for your time not your money.",
+            "A friend is a present you give yourself."
+        ]
+
+        let randomIndex = Math.floor(Math.random() * fortunes.length);
+        let randomFortune = fortunes[randomIndex];
 
         res.status(200).send(randomFortune);
-        //form
-        
+    },
+    createUser: (req, res) => {
+        database.push(req.body)
+        res.status(200).send({success: true, info: database})
+    },
+    incUser: (req, res) => {
+        const name = req.params.name
+        for (let i=0; i<database.length; i++) {
+            if (database[i].name === name) {
+                database[i].power_level++
+            }
+        }
+        res.status(200).send({success: true, info: database})
+    },
+    delUser: (req, res) => {
+        const name = req.params.name
+        for (let i=0; i<database.length; i++) {
+            if (database[i].name === name) {
+                database.splice(i, 1);
+            }
+        }
+        res.status(200).send({success: true, info: database})
     }
+
 }
+const database = []
